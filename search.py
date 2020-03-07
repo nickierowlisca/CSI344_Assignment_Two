@@ -117,7 +117,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     genNodes = 0
     
     #Keep track of expanded nodes and store them in closed
-    closed = set([startState])
+    closed = set()
     
     #Cost to goal of the start state
     hcost = heuristic(startState, problem)
@@ -129,38 +129,30 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     nodeList = [(startnode)]
     
     while True:
-        for s, c, a in nodeList:
+            #check if the nodelist is empty and return not found i it is 
+            if len(nodeList)==0:
+                return None
             #select the first node in nodelist
-            firstNode = nodeList[:1]
-            
-            #Check if the first node is the goal 
-            if problem.isGoalState(firstNode[0][0]):
-                #return the path, heuristic cost of the path and the generated nodes
-                return firstNode[0][2], c, genNodes
-            else:
-                #generate the successors
-                nodeSucc = problem.getSuccessors(firstNode[0][0])
-                
-                for state, action, cost in nodeSucc:
-                    if state not in closed:
-                        closed.add(state)
-                        genNodes = genNodes + 1
-                        cost = 1 + heuristic(state, problem)
-                        #newNodeAction = firstNode[0][2] + [action2]
-                        newNode = (state, cost, firstNode[0][2] + [action])
-                        nodeList = nodeList + [newNode]
-                #Rest(nodelist)
-                nodeList = nodeList[1:]
-                
+            Node = nodeList[0]
+            action=Node[2]
+            cost=Node[1]
+            #set the nodelist to rest(nodelist)
+            nodeList=nodeList[1:]
+            if Node[0] not in closed:    
+                #add the state of the node to the closed set as already expanded 
+                closed.add(Node[0])
+                #Check if the first node is the goal 
+                if problem.isGoalState(Node[0]):
+                    #return the path, heuristic cost of the path and the generated nodes
+                    return [Node[2],Node[1],genNodes]
+                #generate the successors of the node and append them to the list
+                nodeSucc = problem.getSuccessors(Node[0])
+                genNodes = genNodes + 1
+                for item in nodeSucc:
+                    nodeList = nodeList + [(item[0],cost+(item[2]+heuristic(item[0], problem)),action+[item[1]])]
                 #sort the nodelist in ascending order
-                nodeList = sorted(nodeList, key=lambda l : l[1])
-                  
-                
-                
-                
-    
-    
-
+                nodeList=sorted(nodeList, key=lambda tup:tup[1])
+  
 
 # Abbreviations
 bfs = breadthFirstSearch
