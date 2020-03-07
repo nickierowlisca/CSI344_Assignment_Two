@@ -274,16 +274,16 @@ if __name__ == '__main__':
     #A* SEARCH ALGORITHM
     
     print "**************************** A* SEARCH*********************************"
-    search.aStarSearch(problem)
+    result=search.aStarSearch(problem)
     
     #Store the path in apath
-    apath = search.aStarSearch(problem)[0]
+    apath = result[0]
     
     #Store the nodes generated in genNodes
-    genNodes = search.aStarSearch(problem)[1]
+    genNodes =result[2]
     
     #Store the cost in acost
-    acost = search.aStarSearch(problem)[2]
+    acost = result[1]
     
     print('A* Search found a path of %d moves: %s' % (len(apath), str(apath)))
     curr = puzzle
