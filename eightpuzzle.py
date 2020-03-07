@@ -21,7 +21,6 @@ class EightPuzzleState:
     """
     The Eight Puzzle is described in the course textbook on
     page 64.
-
     This class defines the mechanics of the puzzle itself.  The
     task of recasting this puzzle as a search problem is left to
     the EightPuzzleSearchProblem class.
@@ -30,13 +29,10 @@ class EightPuzzleState:
     def __init__( self, numbers ):
         """
           Constructs a new eight puzzle from an ordering of numbers.
-
         numbers: a list of integers from 0 to 8 representing an
           instance of the eight puzzle.  0 represents the blank
           space.  Thus, the list
-
             [1, 0, 2, 3, 4, 5, 6, 7, 8]
-
           represents the eight puzzle:
             -------------
             | 1 |   | 2 |
@@ -45,7 +41,6 @@ class EightPuzzleState:
             -------------
             | 6 | 7 | 8 |
             ------------
-
         The configuration of the puzzle is stored in a 2-dimensional
         list (a list of lists) 'cells'.
         """
@@ -62,7 +57,6 @@ class EightPuzzleState:
     def isGoal( self ):
         """
           Checks to see if the puzzle is in its goal state.
-
             -------------
             |   | 1 | 2 |
             -------------
@@ -70,10 +64,8 @@ class EightPuzzleState:
             -------------
             | 6 | 7 | 8 |
             -------------
-
         >>> EightPuzzleState([0, 1, 2, 3, 4, 5, 6, 7, 8]).isGoal()
         True
-
         >>> EightPuzzleState([1, 0, 2, 3, 4, 5, 6, 7, 8]).isGoal()
         False
         """
@@ -88,10 +80,8 @@ class EightPuzzleState:
     def legalMoves( self ):
         """
           Returns a list of legal moves from the current state.
-
         Moves consist of moving the blank space up, down, left or right.
         These are encoded as 'up', 'down', 'left' and 'right' respectively.
-
         >>> EightPuzzleState([0, 1, 2, 3, 4, 5, 6, 7, 8]).legalMoves()
         ['down', 'right']
         """
@@ -111,11 +101,9 @@ class EightPuzzleState:
         """
           Returns a new eightPuzzle with the current state and blankLocation
         updated based on the provided move.
-
         The move should be a string drawn from a list returned by legalMoves.
         Illegal moves will raise an exception, which may be an array bounds
         exception.
-
         NOTE: This function *does not* change the current object.  Instead,
         it returns a new object.
         """
@@ -150,7 +138,6 @@ class EightPuzzleState:
         """
             Overloads '==' such that two eightPuzzles with the same configuration
           are equal.
-
           >>> EightPuzzleState([0, 1, 2, 3, 4, 5, 6, 7, 8]) == \
               EightPuzzleState([1, 0, 2, 3, 4, 5, 6, 7, 8]).result('left')
           True
@@ -188,7 +175,6 @@ class EightPuzzleState:
 class EightPuzzleSearchProblem(search.SearchProblem):
     """
       Implementation of a SearchProblem for the  Eight Puzzle domain
-
       Each state is represented by an instance of an eightPuzzle.
     """
     def __init__(self,puzzle):
@@ -215,7 +201,6 @@ class EightPuzzleSearchProblem(search.SearchProblem):
     def getCostOfActions(self, actions):
         """
          actions: A list of actions to take
-
         This method returns the total cost of a particular sequence of actions.  The sequence must
         be composed of legal moves
         """
@@ -231,12 +216,9 @@ EIGHT_PUZZLE_DATA = [[1, 0, 2, 3, 4, 5, 6, 7, 8],
 def loadEightPuzzle(puzzleNumber):
     """
       puzzleNumber: The number of the eight puzzle to load.
-
       Returns an eight puzzle object generated from one of the
       provided puzzles in EIGHT_PUZZLE_DATA.
-
       puzzleNumber can range from 0 to 5.
-
       >>> print loadEightPuzzle(0)
       -------------
       | 1 |   | 2 |
@@ -251,7 +233,6 @@ def loadEightPuzzle(puzzleNumber):
 def createRandomEightPuzzle(moves=100):
     """
       moves: number of random moves to apply
-
       Creates a random eight puzzle by applying
       a series of 'moves' random moves to a solved
       puzzle.
@@ -274,16 +255,16 @@ if __name__ == '__main__':
     #A* SEARCH ALGORITHM
     
     print "**************************** A* SEARCH*********************************"
-    search.aStarSearch(problem)
+    result=search.aStarSearch(problem)
     
     #Store the path in apath
-    apath = search.aStarSearch(problem)[0]
+    apath = result[0]
     
     #Store the nodes generated in genNodes
-    genNodes = search.aStarSearch(problem)[1]
+    genNodes =result[2]
     
     #Store the cost in acost
-    acost = search.aStarSearch(problem)[2]
+    acost = result[1]
     
     print('A* Search found a path of %d moves: %s' % (len(apath), str(apath)))
     curr = puzzle
